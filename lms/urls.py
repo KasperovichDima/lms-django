@@ -20,5 +20,5 @@ import students.views as st_v
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('generate_students/', st_v.generate_students),
+    path('generate_students/', st_v.gen_std),
 ]
