@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Group(models.Model):
 
     cours_name = models.CharField(max_length=30)

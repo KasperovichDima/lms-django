@@ -1,6 +1,7 @@
 from django.db import models
-from faker import Faker
 from django.http import HttpResponse
+
+from faker import Faker
 
 
 class Student(models.Model):
