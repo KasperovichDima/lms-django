@@ -19,12 +19,12 @@ class Command(BaseCommand):
         )
 
 
-def handle(self, *args, **options):
-    for _ in range(options['count']):
-        fk = Faker()
-        t = tm.Teacher(first_name=fk.first_name(),
-                       last_name=fk.last_name(),
-                       age=fk.pyint(25, 75),
-                       specialization=choice(['C/C++', 'JAVA', 'JS', 'Python', 'PHP', 'Rust']),
-                       work_experience=randint(2, 30))
-        t.save()
+    def handle(self, *args, **options):
+        for _ in range(options['count']):
+            fk = Faker()
+            t = tm.Teacher(first_name=fk.first_name(),
+                           last_name=fk.last_name(),
+                           age=fk.pyint(25, 75),
+                           specialization=choice(['C/C++', 'JAVA', 'JS', 'Python', 'PHP', 'Rust']),
+                           work_experience=randint(2, 30))
+            t.save()
