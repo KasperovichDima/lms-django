@@ -18,7 +18,6 @@ class Command(BaseCommand):
             dest='count'
         )
 
-
     def handle(self, *args, **options):
         for _ in range(options['count']):
             fk = Faker()
