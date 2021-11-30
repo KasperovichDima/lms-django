@@ -20,10 +20,13 @@ import groups.views as g_v
 
 import students.views as st_v
 
+import teachers.views as t_v
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('generate_students/', st_v.gen_std),
     path('students/', st_v.get_students, name='get_students'),
-    path('groups/', g_v.get_groups, name='get_groups')
+    path('groups/', g_v.get_groups, name='get_groups'),
+    path('teachers/', t_v.get_teachers, name='get_teachers')
 ]
