@@ -1,20 +1,26 @@
-from django.shortcuts import render # noqa
-from .models import Student
-from webargs.djangoparser import use_kwargs, use_args
-from webargs import fields, validate
-from .utils import qset_to_html
 from django.http import HttpResponse
+from django.shortcuts import render # noqa
+
+from webargs.djangoparser import use_args
+
+from .models import Student
+
+from webargs import fields, validate    # noqa
+
+from .utils import qset_to_html
+
 
 def gen_std(request):
     return HttpResponse(Student.generate_students(request))
+
 
 @use_args(
     {
         'first_name': fields.Str(required=False),
         'last_name': fields.Str(required=False),
-        'age': fields.Int(required=False),
+        'age': fields.Int(required=False)
     },
-    location = 'query'
+    location='query'
 )
 def get_students(request, args):
     res = Student.objects.all()
