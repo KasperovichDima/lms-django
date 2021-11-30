@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path   # # noqa
 
+import groups.views as g_v
+
 import students.views as st_v
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('generate_students/', st_v.gen_std),
     path('students/', st_v.get_students, name='get_students'),
+    path('groups/', g_v.get_groups, name='get_groups')
 ]
