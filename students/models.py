@@ -1,5 +1,5 @@
 from django.db import models
-from django.http import HttpResponse
+
 
 from faker import Faker
 
@@ -34,5 +34,4 @@ class Student(models.Model):
                           age=fake.pyint(15, 75))
             std.save()
 
-        http = f'<h1>{num} students generated!</h1>'
-        return HttpResponse(http)
+        return f'<h1>{num} students generated!</h1>'
