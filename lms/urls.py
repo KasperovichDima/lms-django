@@ -14,9 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path   # # noqa
+from django.urls import path, re_path, include   # # noqa
 
 import groups.views as g_v
+
+import debug_toolbar
 
 import students.views as st_v
 
@@ -28,5 +30,6 @@ urlpatterns = [
     path('generate_students/', st_v.gen_std),
     path('students/', st_v.get_students, name='get_students'),
     path('groups/', g_v.get_groups, name='get_groups'),
-    path('teachers/', t_v.get_teachers, name='get_teachers')
+    path('teachers/', t_v.get_teachers, name='get_teachers'),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
