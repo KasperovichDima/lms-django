@@ -1,8 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render   # noqa
+from django.views.decorators.csrf import csrf_exempt
 
 from students.utils import qset_to_html
 
+from .forms import TeachersCreateForm
 from .models import Teacher
 
 from webargs import fields, validate    # noqa
@@ -48,3 +50,25 @@ def get_teachers(request, args):
         """
 
     return HttpResponse(html_form + qset_to_html(res))
+
+
+@csrf_exempt
+def create_teacher(request):
+    if request.method == 'GET':
+        form = TeachersCreateForm()
+
+    elif request.method == 'POST':
+        form = TeachersCreateForm(data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/teachers/')
+
+    html_form = f"""
+           <form method="post">
+           {form.as_p()}
+           <input type="submit" value="Submit">
+           </form>
+       """
+
+    return HttpResponse(html_form)

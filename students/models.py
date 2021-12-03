@@ -7,7 +7,7 @@ from django.db import models
 
 from faker import Faker
 
-from students import validators as val
+from .validators import adult_validator
 
 
 class Student(models.Model):
@@ -23,7 +23,11 @@ class Student(models.Model):
     age = models.IntegerField()
     birthday = models.DateField(
         default=datetime.date.today,
-        validators=[val.adult_validator]
+        validators=[adult_validator])
+    phone_number = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
     )
 
     def save(self, *args, **kwargs):
@@ -31,7 +35,7 @@ class Student(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} {self.age}'
+        return f'{self.first_name}, {self.last_name}, {self.age}, {self.phone_number}'
 
     @staticmethod
     def generate_students(request):
