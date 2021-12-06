@@ -8,6 +8,7 @@ from django.db import models
 from faker import Faker
 
 from .validators import adult_validator
+from .validators import phone_validator
 
 
 class Student(models.Model):
@@ -28,6 +29,7 @@ class Student(models.Model):
         max_length=20,
         blank=True,
         null=True,
+        validators=[phone_validator]
     )
 
     def save(self, *args, **kwargs):

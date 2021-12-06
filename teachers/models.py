@@ -1,5 +1,7 @@
 from django.db import models
 
+from .validators import phone_validator
+
 
 class Teacher(models.Model):
 
@@ -12,6 +14,7 @@ class Teacher(models.Model):
         max_length=20,
         blank=True,
         null=True,
+        validators=[phone_validator]
     )
 
     def __str__(self):

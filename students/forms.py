@@ -23,7 +23,7 @@ class StudentCreateForm(forms.ModelForm):
     @staticmethod
     def normalize_phone(phone):
         """
-        Normalization and validation of phone number from user
+        Normalization of phone number from user
         :param phone: symbols from field "Phone number"
         :return: normalized phone number or raise ValidationError
         """
@@ -66,12 +66,9 @@ class StudentCreateForm(forms.ModelForm):
 
     def clean_phone_number(self):
         """
-        unique check of phone number
-        :return: unique phone number for DB
+        phone number check and normalization
+        :return: correct phone number for DB
         """
         phone_number = self.cleaned_data['phone_number']
         phone_number = self.normalize_phone(phone_number)
-        if Student.objects.filter(phone_number=phone_number) and phone_number:
-            raise ValidationError('This number is already in use. Please, try another one!')
-
         return phone_number
