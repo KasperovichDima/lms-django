@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render # noqa
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from webargs.djangoparser import use_args
@@ -11,6 +11,9 @@ from webargs import fields, validate    # noqa
 
 from .utils import qset_to_html
 
+
+def index(request):
+    return HttpResponse('<h1>Django LMS Project</h1>')
 
 def gen_std(request):
     return HttpResponse(Student.generate_students(request))
@@ -30,25 +33,14 @@ def get_students(request, args):
         for k, v in args.items():
             res = res.filter(**{k: v})
 
-    html_form = """
-            <form method="get">
-                <label for="fname">First name:</label>
-                <input type="text" id="fname" name="first_name"></br></br>
-
-                <label for="lname">Last name:</label>
-                <input type="text" id="lname" name="last_name"></br></br>
-
-                <label for="age">Age:</label>
-                <input type="number" name="age"></br></br>
-
-                <input type="submit" value="Submit">
-            </form>
-        """
-
-    return HttpResponse(html_form + qset_to_html(res))
+    return render(
+        request=request,
+        template_name='students/list.html',
+        context={'students':res}
+    )
 
 
-@csrf_exempt
+# @csrf_exempt
 def create_student(request):
     if request.method == 'GET':
         form = StudentCreateForm()
@@ -60,10 +52,40 @@ def create_student(request):
             form.save()
             return HttpResponseRedirect('/students/')
 
+    # html_form = f"""
+    #     <form method="post">
+    #     {form.as_p()}
+    #     <input type="submit" value="Create">
+    #     </form>
+    # """
+    #
+    # return HttpResponse(html_form)
+
+    return render(
+        request=request,
+        template_name='students/create.html',
+        context={'form': form}
+    )
+
+
+@csrf_exempt
+def update_student(request, id):
+    student = Student.objects.get(id=id)
+    if request.method == 'GET':
+        form = StudentCreateForm(instance=student)
+
+    elif request.method == 'POST':
+        form = StudentCreateForm(data=request.POST,
+                                 instance=student)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/students/')
+
     html_form = f"""
         <form method="post">
         {form.as_p()}
-        <input type="submit" value="Submit">
+        <input type="submit" value="Update">
         </form>
     """
 
