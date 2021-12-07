@@ -29,14 +29,17 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls),
     path('', st_v.index, name='index'),
-    path('generate_students/', st_v.gen_std),
+    # Students
     path('students/', st_v.get_students, name='get_students'),
-    path('groups/', g_v.get_groups, name='get_groups'),
-    path('teachers/', t_v.get_teachers, name='get_teachers'),
     path('students/create/', st_v.create_student, name='create_student'),
+    path('students/update/<int:pk>/', st_v.update_student, name='update_student'),
+    path('generate_students/', st_v.gen_std),
+    # Groups
+    path('groups/', g_v.get_groups, name='get_groups'),
     path('groups/create/', g_v.create_group, name='create_group'),
+    path('groups/update/<int:pk>/', g_v.update_group, name='update_group'),
+    # Teachers
+    path('teachers/', t_v.get_teachers, name='get_teachers'),
     path('teachers/create/', t_v.create_teacher, name='create_teacher'),
-    path('students/update/<int:id>/', st_v.update_student, name='update_student'),
-
-
+    path('teachers/update/<int:pk>/', t_v.update_teacher, name='update_teacher'),
 ]

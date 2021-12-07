@@ -37,7 +37,8 @@ class Student(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.first_name}, {self.last_name}, {self.age}, {self.birthday}, {self.phone_number}'
+        return f'{self.first_name}, {self.last_name}, ' \
+               f'{self.age}, {self.birthday}, {self.phone_number}'
 
     @staticmethod
     def generate_students(request):

@@ -1,6 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 
 from webargs.djangoparser import use_args
 
@@ -9,11 +8,15 @@ from .models import Student
 
 from webargs import fields, validate    # noqa
 
-from .utils import qset_to_html
-
 
 def index(request):
-    return HttpResponse('<h1>Django LMS Project</h1>')
+
+    return render(
+        request=request,
+        template_name='students/homepage.html',
+        context={'greetings': 'Django LMS Project'}
+    )
+
 
 def gen_std(request):
     return HttpResponse(Student.generate_students(request))
@@ -36,11 +39,10 @@ def get_students(request, args):
     return render(
         request=request,
         template_name='students/list.html',
-        context={'students':res}
+        context={'students': res}
     )
 
 
-# @csrf_exempt
 def create_student(request):
     if request.method == 'GET':
         form = StudentCreateForm()
@@ -52,15 +54,6 @@ def create_student(request):
             form.save()
             return HttpResponseRedirect('/students/')
 
-    # html_form = f"""
-    #     <form method="post">
-    #     {form.as_p()}
-    #     <input type="submit" value="Create">
-    #     </form>
-    # """
-    #
-    # return HttpResponse(html_form)
-
     return render(
         request=request,
         template_name='students/create.html',
@@ -68,25 +61,20 @@ def create_student(request):
     )
 
 
-@csrf_exempt
-def update_student(request, id):
-    student = Student.objects.get(id=id)
+def update_student(request, pk):
+    student = Student.objects.get(id=pk)
     if request.method == 'GET':
         form = StudentCreateForm(instance=student)
 
     elif request.method == 'POST':
         form = StudentCreateForm(data=request.POST,
                                  instance=student)
-
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/students/')
 
-    html_form = f"""
-        <form method="post">
-        {form.as_p()}
-        <input type="submit" value="Update">
-        </form>
-    """
-
-    return HttpResponse(html_form)
+    return render(
+        request=request,
+        template_name='students/update.html',
+        context={'form': form}
+    )

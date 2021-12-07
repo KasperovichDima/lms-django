@@ -1,8 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render   # noqa
-from django.views.decorators.csrf import csrf_exempt
-
-from students.utils import qset_to_html
 
 from webargs import fields, validate    # noqa
 from webargs.djangoparser import use_args
@@ -27,28 +24,13 @@ def get_groups(request, args):
         if value:
             res = res.filter(**{key: value})
 
-    html_form = """
-        <form method="get">
-            <label for="cname">Course:</label>
-            <input type="text" id="cname" name="course_name"></br></br>
-
-            <label for="sdate">Start Date:</label>
-            <input type="date" id="sdate" name="start_date"></br></br>
-
-            <label for="nfs">Number of Students:</label>
-            <input type="number" id="nfs" name="number_of_students"></br></br>
-
-            <label for="tname">Teacher Name:</label>
-            <input type="text" id="tname" name="teacher_name"></br></br>
-
-            <input type="submit" value="Submit">
-        </form>
-    """
-
-    return HttpResponse(html_form + qset_to_html(res))
+    return render(
+        request=request,
+        template_name='groups/list.html',
+        context={'groups': res}
+    )
 
 
-@csrf_exempt
 def create_group(request):
     if request.method == 'GET':
         form = GroupsCreateForm()
@@ -60,11 +42,26 @@ def create_group(request):
             form.save()
             return HttpResponseRedirect('/groups/')
 
-    html_form = f"""
-           <form method="post">
-           {form.as_p()}
-           <input type="submit" value="Submit">
-           </form>
-       """
+    return render(
+        request=request,
+        template_name='groups/create.html',
+        context={'form': form}
+    )
 
-    return HttpResponse(html_form)
+
+def update_group(request, pk):
+    group = Group.objects.get(id=pk)
+    if request.method == 'GET':
+        form = GroupsCreateForm(instance=group)
+
+    elif request.method == 'POST':
+        form = GroupsCreateForm(data=request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/groups/')
+
+    return render(
+        request=request,
+        template_name='groups/update.html',
+        context={'form': form}
+    )
