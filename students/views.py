@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 
 from webargs.djangoparser import use_args
 
@@ -13,7 +15,7 @@ def index(request):
 
     return render(
         request=request,
-        template_name='students/homepage.html',
+        template_name='index.html',
         context={'greetings': 'Django LMS Project'}
     )
 
@@ -31,6 +33,7 @@ def gen_std(request):
     location='query'
 )
 def get_students(request, args):
+    form = StudentCreateForm()
     res = Student.objects.all()
     if args:
         for k, v in args.items():
@@ -39,7 +42,7 @@ def get_students(request, args):
     return render(
         request=request,
         template_name='students/list.html',
-        context={'students': res}
+        context={'students': res, 'form': form}
     )
 
 
@@ -52,7 +55,7 @@ def create_student(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/students/')
+            return HttpResponseRedirect(reverse('students:get'))
 
     return render(
         request=request,
@@ -71,10 +74,19 @@ def update_student(request, pk):
                                  instance=student)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/students/')
+            return HttpResponseRedirect(reverse('students:get'))
 
     return render(
         request=request,
         template_name='students/update.html',
         context={'form': form}
     )
+
+
+def del_student(request, pk):
+    student = get_object_or_404(Student, id=pk)
+    if request.method == 'POST':
+        student.delete()
+        return HttpResponseRedirect(reverse('students:get'))
+
+    return render(request, 'students/del.html', {'student': student})

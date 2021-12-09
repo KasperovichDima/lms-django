@@ -9,8 +9,8 @@
         <tr>
             <td><b><a href="/">Home</a></b>&nbsp;&nbsp;</td>
             <td><b>Students:</b></td>
-            <td><a href="/students/">List</a>&nbsp;&nbsp;</td>
-            <td><a href="/students/create/">Create</a></td>
+            <td><a href="{% url 'students:get' %}">List</a>&nbsp;&nbsp;</td>
+            <td><a href="{% url 'students:create' %}">Create</a></td>
             <td><b>&nbsp;&nbsp;Teachers:</b></td>
             <td><a href="/teachers/">List</a>&nbsp;&nbsp;</td>
             <td><a href="/teachers/create/">Create</a></td>

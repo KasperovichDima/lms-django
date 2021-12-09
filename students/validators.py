@@ -12,7 +12,7 @@ def adult_validator(birthday, age_limit=18):
 
 
 def phone_validator(phone_number):
-    if students.models.Student.objects.filter(phone_number=phone_number).exists():
+    if students.models.Student.objects.filter(phone_number=phone_number and ).exists():
         raise ValidationError('This number is already in use. Please, try another one!')
 
 

@@ -16,7 +16,8 @@ Including another URLconf
 import debug_toolbar
 
 from django.contrib import admin
-from django.urls import path, re_path, include   # # noqa
+from django.urls import include
+from django.urls import path
 
 import groups.views as g_v
 
@@ -30,10 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', st_v.index, name='index'),
     # Students
-    path('students/', st_v.get_students, name='get_students'),
-    path('students/create/', st_v.create_student, name='create_student'),
-    path('students/update/<int:pk>/', st_v.update_student, name='update_student'),
-    path('generate_students/', st_v.gen_std),
+    path('students/', include('students.urls')),
     # Groups
     path('groups/', g_v.get_groups, name='get_groups'),
     path('groups/create/', g_v.create_group, name='create_group'),

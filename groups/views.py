@@ -19,15 +19,21 @@ from .models import Group
 )
 def get_groups(request, args):
     res = Group.objects.all()
+    form = GroupsCreateForm()
 
     for key, value in args.items():
         if value:
             res = res.filter(**{key: value})
 
+    # return render(
+    #     request=request,
+    #     template_name='groups/list.html',
+    #     context={'groups': res, 'form': form}
+
     return render(
-        request=request,
-        template_name='groups/list.html',
-        context={'groups': res}
+        request,
+        'groups/list.html',
+        {'groups': res, 'form': form}
     )
 
 
@@ -65,3 +71,18 @@ def update_group(request, pk):
         template_name='groups/update.html',
         context={'form': form}
     )
+
+
+# Вью для формы, написанной вручную
+# def get_groups(request, args):
+#     res = Group.objects.all()
+#
+#     for key, value in args.items():
+#         if value:
+#             res = res.filter(**{key: value})
+#
+#     return render(
+#         request=request,
+#         template_name='groups/list.html',
+#         context={'groups': res}
+#     )

@@ -20,6 +20,7 @@ from webargs.djangoparser import use_args
 )
 def get_teachers(request, args):
     res = Teacher.objects.all()
+    form = TeachersCreateForm()
 
     for key, value in args.items():
         if value:
@@ -28,7 +29,7 @@ def get_teachers(request, args):
     return render(
         request=request,
         template_name='teachers/list.html',
-        context={'teachers': res}
+        context={'teachers': res, 'form': form}
     )
 
 
