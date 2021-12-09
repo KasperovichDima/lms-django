@@ -1,13 +1,13 @@
 import datetime
 
+from core.validators import AdultValidator
+
 from dateutil.relativedelta import relativedelta
 
 from django.core.validators import MinLengthValidator
 from django.db import models
 
 from faker import Faker
-
-from core.validators import AdultValidator
 
 
 class Student(models.Model):

@@ -9,6 +9,7 @@ def adult_validator(birthday, age_limit=18):
     if age < age_limit:
         raise ValidationError(f'Must be {age_limit} y.o. and older')
 
+
 @deconstructible
 class AdultValidator:
     def __init__(self, age_limit):

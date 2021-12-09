@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse
 
 from webargs.djangoparser import use_args
@@ -9,15 +9,6 @@ from .forms import StudentCreateForm
 from .models import Student
 
 from webargs import fields, validate    # noqa
-
-
-def index(request):
-
-    return render(
-        request=request,
-        template_name='index.html',
-        context={'greetings': 'Django LMS Project'}
-    )
 
 
 def gen_std(request):
