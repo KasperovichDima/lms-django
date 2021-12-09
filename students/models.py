@@ -7,12 +7,10 @@ from django.db import models
 
 from faker import Faker
 
-from .validators import AdultValidator
-from .validators import phone_validator
+from core.validators import AdultValidator
 
 
 class Student(models.Model):
-
     first_name = models.CharField(
         max_length=100,
         validators=[MinLengthValidator(2)]
@@ -24,12 +22,13 @@ class Student(models.Model):
     age = models.IntegerField()
     birthday = models.DateField(
         default=datetime.date.today,
-        validators=[AdultValidator(21)])
+        validators=[AdultValidator(21)]
+    )
     phone_number = models.CharField(
         max_length=20,
         blank=True,
         null=True,
-        validators=[phone_validator]
+        unique=True
     )
 
     def save(self, *args, **kwargs):
