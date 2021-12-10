@@ -1,4 +1,4 @@
-{% extends 'base+style.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
     Students list
@@ -9,7 +9,7 @@
         {{form.as_p}}
         <input type="submit" value="Search">
     </form>
-<p><strong>Count of students:{{students.count}}</strong></p>
+<p><strong>Count of students:{{students.count}}</strong>&nbsp;&nbsp;<b><a href="{% url 'students:generate' %}">Generate Students</a></b></p>
     <table>
         <tr>
             <th>№</th>

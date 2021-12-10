@@ -9,6 +9,6 @@
         {% csrf_token %}
         {{form.as_p}}
         <input type="submit" value="Update">
-        <a href="/teachers/">Cancel</a>
+        <a href="{% url 'teachers:get' %}">Cancel</a>
     </form>
 {% endblock %}

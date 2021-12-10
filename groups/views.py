@@ -1,5 +1,7 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render   # noqa
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.urls import reverse
 
 from webargs import fields, validate    # noqa
 from webargs.djangoparser import use_args
@@ -25,11 +27,6 @@ def get_groups(request, args):
         if value:
             res = res.filter(**{key: value})
 
-    # return render(
-    #     request=request,
-    #     template_name='groups/list.html',
-    #     context={'groups': res, 'form': form}
-
     return render(
         request,
         'groups/list.html',
@@ -46,7 +43,7 @@ def create_group(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/groups/')
+            return HttpResponseRedirect(reverse('groups:get'))
 
     return render(
         request=request,
@@ -64,7 +61,7 @@ def update_group(request, pk):
         form = GroupsCreateForm(data=request.POST, instance=group)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/groups/')
+            return HttpResponseRedirect(reverse('groups:get'))
 
     return render(
         request=request,
@@ -73,7 +70,15 @@ def update_group(request, pk):
     )
 
 
-# Вью для формы, написанной вручную
+def del_group(request, pk):
+    group = get_object_or_404(Group, id=pk)
+    if request.method == 'POST':
+        group.delete()
+        return HttpResponseRedirect(reverse('groups:get'))
+
+    return render(request, 'groups/del.html', {'group': group})
+
+# View for handmade form
 # def get_groups(request, args):
 #     res = Group.objects.all()
 #

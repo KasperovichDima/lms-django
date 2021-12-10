@@ -21,10 +21,6 @@ from django.contrib import admin
 from django.urls import include
 from django.urls import path
 
-import groups.views as g_v
-
-import teachers.views as t_v
-
 
 urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
@@ -33,11 +29,7 @@ urlpatterns = [
     # Students
     path('students/', include('students.urls')),
     # Groups
-    path('groups/', g_v.get_groups, name='get_groups'),
-    path('groups/create/', g_v.create_group, name='create_group'),
-    path('groups/update/<int:pk>/', g_v.update_group, name='update_group'),
+    path('groups/', include('groups.urls')),
     # Teachers
-    path('teachers/', t_v.get_teachers, name='get_teachers'),
-    path('teachers/create/', t_v.create_teacher, name='create_teacher'),
-    path('teachers/update/<int:pk>/', t_v.update_teacher, name='update_teacher'),
+    path('teachers/', include('teachers.urls')),
 ]

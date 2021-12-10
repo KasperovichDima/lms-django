@@ -1,5 +1,7 @@
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from django.urls import reverse
 
 from .forms import TeachersCreateForm
 from .models import Teacher
@@ -42,7 +44,7 @@ def create_teacher(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/teachers/')
+            return HttpResponseRedirect(reverse('teachers:get'))
 
     return render(
         request=request,
@@ -60,10 +62,19 @@ def update_teacher(request, pk):
         form = TeachersCreateForm(data=request.POST, instance=teacher)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/teachers/')
+            return HttpResponseRedirect(reverse('teachers:get'))
 
     return render(
         request=request,
         template_name='teachers/update.html',
         context={'form': form}
     )
+
+
+def del_teacher(request, pk):
+    teacher = get_object_or_404(Teacher, id=pk)
+    if request.method == 'POST':
+        teacher.delete()
+        return HttpResponseRedirect(reverse('teachers:get'))
+
+    return render(request, 'teachers/del.html', {'teacher': teacher})

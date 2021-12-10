@@ -60,4 +60,4 @@ class Student(models.Model):
                           age=fake.pyint(15, 75))
             std.save()
 
-        return f'<h1>{num} students generated!</h1>'
+        return f'{num} students generated!'

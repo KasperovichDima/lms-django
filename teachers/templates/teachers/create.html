@@ -9,5 +9,6 @@
         {% csrf_token %}
         {{form.as_p}}
         <input type="submit" value="Create">
+        <a href="{% url 'teachers:get' %}">Cancel</a>
     </form>
 {% endblock %}
