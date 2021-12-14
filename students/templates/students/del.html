@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Student delete
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <br><br>
+        Are you sure, you want to delete
+            {{student.first_name}} {{student.last_name}}?
+            <br>This operation is irreversible!
+        <br><br>
+        <input type="submit" value="Delete">
+        <a href="{% url 'students:get'%}">Cancel</a>
+    </form>
+{% endblock %}

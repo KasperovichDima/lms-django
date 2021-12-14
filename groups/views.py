@@ -1,11 +1,12 @@
-from django.http import HttpResponse
-from django.shortcuts import render   # noqa
-
-from students.utils import qset_to_html
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.urls import reverse
 
 from webargs import fields, validate    # noqa
 from webargs.djangoparser import use_args
 
+from .forms import GroupsCreateForm
 from .models import Group
 
 
@@ -20,27 +21,73 @@ from .models import Group
 )
 def get_groups(request, args):
     res = Group.objects.all()
+    form = GroupsCreateForm()
 
     for key, value in args.items():
         if value:
             res = res.filter(**{key: value})
 
-    html_form = """
-        <form method="get">
-            <label for="cname">Course:</label>
-            <input type="text" id="cname" name="course_name"></br></br>
+    return render(
+        request,
+        'groups/list.html',
+        {'groups': res, 'form': form}
+    )
 
-            <label for="sdate">Start Date:</label>
-            <input type="date" id="sdate" name="start_date"></br></br>
 
-            <label for="nfs">Number of Students:</label>
-            <input type="number" id="nfs" name="number_of_students"></br></br>
+def create_group(request):
+    if request.method == 'GET':
+        form = GroupsCreateForm()
 
-            <label for="tname">Teacher Name:</label>
-            <input type="text" id="tname" name="teacher_name"></br></br>
+    elif request.method == 'POST':
+        form = GroupsCreateForm(data=request.POST)
 
-            <input type="submit" value="Submit">
-        </form>
-    """
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('groups:get'))
 
-    return HttpResponse(html_form + qset_to_html(res))
+    return render(
+        request=request,
+        template_name='groups/create.html',
+        context={'form': form}
+    )
+
+
+def update_group(request, pk):
+    group = Group.objects.get(id=pk)
+    if request.method == 'GET':
+        form = GroupsCreateForm(instance=group)
+
+    elif request.method == 'POST':
+        form = GroupsCreateForm(data=request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('groups:get'))
+
+    return render(
+        request=request,
+        template_name='groups/update.html',
+        context={'form': form}
+    )
+
+
+def del_group(request, pk):
+    group = get_object_or_404(Group, id=pk)
+    if request.method == 'POST':
+        group.delete()
+        return HttpResponseRedirect(reverse('groups:get'))
+
+    return render(request, 'groups/del.html', {'group': group})
+
+# View for handmade form
+# def get_groups(request, args):
+#     res = Group.objects.all()
+#
+#     for key, value in args.items():
+#         if value:
+#             res = res.filter(**{key: value})
+#
+#     return render(
+#         request=request,
+#         template_name='groups/list.html',
+#         context={'groups': res}
+#     )

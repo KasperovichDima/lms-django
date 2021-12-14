@@ -1,8 +1,9 @@
-from django.http import HttpResponse
-from django.shortcuts import render   # noqa
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.urls import reverse
 
-from students.utils import qset_to_html
-
+from .forms import TeachersCreateForm
 from .models import Teacher
 
 from webargs import fields, validate    # noqa
@@ -21,30 +22,59 @@ from webargs.djangoparser import use_args
 )
 def get_teachers(request, args):
     res = Teacher.objects.all()
+    form = TeachersCreateForm()
 
     for key, value in args.items():
         if value:
             res = res.filter(**{key: value})
 
-    html_form = """
-            <form method="get">
-                <label for="fname">First Name:</label>
-                <input type="text" id="fname" name="first_name"></br></br>
+    return render(
+        request=request,
+        template_name='teachers/list.html',
+        context={'teachers': res, 'form': form}
+    )
 
-                <label for="lname">Last Name:</label>
-                <input type="text" id="lname" name="last_name"></br></br>
 
-                <label for="age">Age:</label>
-                <input type="number" id="age" name="age"></br></br>
+def create_teacher(request):
+    if request.method == 'GET':
+        form = TeachersCreateForm()
 
-                <label for="spec">Specialization:</label>
-                <input type="text" id="spec" name="specialization"></br></br>
+    elif request.method == 'POST':
+        form = TeachersCreateForm(data=request.POST)
 
-                <label for="wex">Work Experience:</label>
-                <input type="number" id="wex" name="work_experience"></br></br>
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('teachers:get'))
 
-                <input type="submit" value="Submit">
-            </form>
-        """
+    return render(
+        request=request,
+        template_name='teachers/create.html',
+        context={'form': form}
+    )
 
-    return HttpResponse(html_form + qset_to_html(res))
+
+def update_teacher(request, pk):
+    teacher = Teacher.objects.get(id=pk)
+    if request.method == 'GET':
+        form = TeachersCreateForm(instance=teacher)
+
+    elif request.method == 'POST':
+        form = TeachersCreateForm(data=request.POST, instance=teacher)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('teachers:get'))
+
+    return render(
+        request=request,
+        template_name='teachers/update.html',
+        context={'form': form}
+    )
+
+
+def del_teacher(request, pk):
+    teacher = get_object_or_404(Teacher, id=pk)
+    if request.method == 'POST':
+        teacher.delete()
+        return HttpResponseRedirect(reverse('teachers:get'))
+
+    return render(request, 'teachers/del.html', {'teacher': teacher})

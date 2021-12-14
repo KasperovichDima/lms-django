@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Groups list
+{% endblock %}
+
+{% block content %}
+    <form method="get">
+        {{form.as_p}}
+        <input type="submit" value="Search">
+    </form>
+
+<p><strong>Count of groups:{{groups.count}}</strong></p>
+    <table>
+        <tr>
+            <th>№</th>
+            <th>Course name</th>
+            <th>Start date</th>
+            <th>Number of students</th>
+            <th>Teacher name</th>
+            <th>📝</th>
+            <th>❌</th>
+        </tr>
+
+
+{%for group in groups%}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{group.course_name}}</td>
+        <td>{{group.start_date}}</td>
+        <td>{{group.number_of_students}}</td>
+        <td>{{group.teacher_name}}</td>
+        <td><a href="{% url 'groups:update' group.id %}">Edit</a></td>
+        <td><a href="{% url 'groups:delete' group.id %}">Del</a></td>
+    </tr>
+
+{% endfor %}
+{% endblock %}
+    </table>
+
+
+
+<!--Форма, написанная вручную-->
+<!--    <form method="get">-->
+<!--        <label for="cname">Course:</label>-->
+<!--        <input type="text" id="cname" name="course_name"></br></br>-->
+
+<!--        <label for="sdate">Start Date:</label>-->
+<!--        <input type="date" id="sdate" name="start_date"></br></br>-->
+
+<!--        <label for="nfs">Number of Students:</label>-->
+<!--        <input type="number" id="nfs" name="number_of_students"></br></br>-->
+
+<!--        <label for="tname">Teacher Name:</label>-->
+<!--        <input type="text" id="tname" name="teacher_name"></br></br>-->
+
+<!--        <input type="submit" value="Search">-->
+<!--    </form>-->

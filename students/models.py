@@ -1,5 +1,7 @@
 import datetime
 
+from core.validators import AdultValidator
+
 from dateutil.relativedelta import relativedelta
 
 from django.core.validators import MinLengthValidator
@@ -7,11 +9,8 @@ from django.db import models
 
 from faker import Faker
 
-from students import validators as val
-
 
 class Student(models.Model):
-
     first_name = models.CharField(
         max_length=100,
         validators=[MinLengthValidator(2)]
@@ -23,7 +22,13 @@ class Student(models.Model):
     age = models.IntegerField()
     birthday = models.DateField(
         default=datetime.date.today,
-        validators=[val.adult_validator]
+        validators=[AdultValidator(21)]
+    )
+    phone_number = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        unique=True
     )
 
     def save(self, *args, **kwargs):
@@ -31,7 +36,8 @@ class Student(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} {self.age}'
+        return f'{self.first_name}, {self.last_name}, ' \
+               f'{self.age}, {self.birthday}, {self.phone_number}'
 
     @staticmethod
     def generate_students(request):
@@ -54,4 +60,4 @@ class Student(models.Model):
                           age=fake.pyint(15, 75))
             std.save()
 
-        return f'<h1>{num} students generated!</h1>'
+        return f'{num} students generated!'

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS - {% block title %}{% endblock %}</title>
+<!--    <style>{% block style_options %}{% endblock %}</style>-->
+<style>
+
+    table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+</style>
+
+
+</head>
+<body>
+    <table>
+        <tr>
+            <td><b><a href="{% url 'index' %}">Home</a></b>&nbsp;&nbsp;</td>
+            <td><b>Students:</b></td>
+            <td><a href="{% url 'students:get' %}">List</a>&nbsp;&nbsp;</td>
+            <td><a href="{% url 'students:create' %}">Create</a></td>
+            <td><b>&nbsp;&nbsp;Teachers:</b></td>
+            <td><a href="{% url 'teachers:get' %}">List</a>&nbsp;&nbsp;</td>
+            <td><a href="{% url 'teachers:create' %}">Create</a></td>
+            <td><b>&nbsp;&nbsp;Groups:</b></td>
+            <td><a href="{% url 'groups:get' %} ">List</a>&nbsp;&nbsp;</td>
+            <td><a href="{% url 'groups:create' %}">Create</a></td>
+        </tr>
+
+    </table>
+
+
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>
