@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'groups.apps.GroupsConfig',
     'teachers.apps.TeachersConfig',
-    'students.apps.StudentsConfig',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'django_filters',
     'debug_toolbar',
+    'students.apps.StudentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -114,7 +117,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
@@ -132,3 +135,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+DATE_FORMAT = 'd-m-Y'

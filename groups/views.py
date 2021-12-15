@@ -4,33 +4,20 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from webargs import fields, validate    # noqa
-from webargs.djangoparser import use_args
 
 from .forms import GroupsCreateForm
+from .forms import GroupsFilter
 from .models import Group
 
 
-@use_args(
-    {
-        'course_name': fields.Str(required=False),
-        'start_date': fields.Date(required=False),
-        'number_of_students': fields.Int(required=False),
-        'teacher_name': fields.Str(required=False)
-    },
-    location='query'
-)
-def get_groups(request, args):
+def get_groups(request):
     res = Group.objects.all()
-    form = GroupsCreateForm()
-
-    for key, value in args.items():
-        if value:
-            res = res.filter(**{key: value})
+    filter_groups = GroupsFilter(data=request.GET, queryset=res)
 
     return render(
         request,
         'groups/list.html',
-        {'groups': res, 'form': form}
+        {'filter_groups': filter_groups}
     )
 
 

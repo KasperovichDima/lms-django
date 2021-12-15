@@ -24,6 +24,9 @@ class Student(models.Model):
         default=datetime.date.today,
         validators=[AdultValidator(21)]
     )
+    enroll_date = models.DateField(default=datetime.date.today)
+    graduate_date = models.DateField(default=datetime.date.today)
+
     phone_number = models.CharField(
         max_length=20,
         blank=True,

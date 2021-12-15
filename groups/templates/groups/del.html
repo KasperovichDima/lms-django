@@ -10,9 +10,9 @@
         <br><br>
         Are you sure, you want to delete group
             {{group.course_name}}, which starts on {{group.start_date}}?
-            <br>This operation is irreversible!
+            <br><b>This operation is irreversible!</b>
         <br><br>
-        <input type="submit" value="Delete">
-        <a href="{% url 'groups:get' %}">Cancel</a>
+        <input class="btn btn-outline-danger" type="submit" value="Delete">
+        <a class="btn btn-outline-warning" href="{% url 'groups:get' %}">Cancel</a>
     </form>
 {% endblock %}
