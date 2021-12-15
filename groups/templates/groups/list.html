@@ -10,7 +10,7 @@
 <!--Accordion + search for-->
 {% include "groups/includes/search_form.html" %}
 
-<p><strong>Count of groups:{{filter_groups.count}}</strong></p>
+<p><strong>Count of groups:{{filter_groups.qs.count}}</strong></p>
 
 <!--Table headers-->
 <table class="table table-dark table-hover">
