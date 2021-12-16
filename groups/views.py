@@ -53,7 +53,7 @@ def update_group(request, pk):
     return render(
         request=request,
         template_name='groups/update.html',
-        context={'form': form}
+        context={'form': form, 'group': group}
     )
 
 

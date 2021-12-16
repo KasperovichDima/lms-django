@@ -9,42 +9,29 @@
 
 <!--Accordion + search for-->
 {% include "students/includes/search_form.html" %}
-
-
 <p class = "mt-2"><strong>Count of students:{{filter_students.qs.count}}</strong>&nbsp;&nbsp;</p>
 
-<!--Table headers-->
-<table class="table table-dark table-hover">
-    <tr>
-        <th>№</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Age</th>
-        <th>Birthday</th>
-        <th>Enroll date</th>
-        <th>Graduate date</th>
-        <th><i class="bi bi-telephone"></i></th>
-        <th><i class="bi bi-pencil-square"></i></th>
-        <th><i class="bi bi-trash-fill"></i></th>
-    </tr>
+<!--Table (students_list)-->
+{%with obj_list=filter_students.qs%}
+    {%include 'includes/students_list_table.html'%}
+{%endwith%}
 
-<!--Table content-->
-{%for student in filter_students.qs%}
-    <tr>
-        <td>{{forloop.counter}}</td>
-        <td>{{student.first_name}}</td>
-        <td>{{student.last_name}}</td>
-        <td>{{student.age}}</td>
-        <td>{{student.birthday}}</td>
-        <td>{{student.enroll_date}}</td>
-        <td>{{student.graduate_date}}</td>
-        <td>{% if student.phone_number is not None %}
-                {{student.phone_number}}</td>
-            {% endif %}
-        <td><a class="btn btn-outline-warning" href="{% url 'students:update' student.id %}">Edit</a></td>
-        <td><a class="btn btn-outline-danger" href="{% url 'students:delete' student.id %}">Del</a></td>
-    </tr>
-
-{% endfor %}
 {% endblock %}
-    </table>
+
+
+<!--<table class="table table-dark table-hover">-->
+<!--    <tr>-->
+<!--        <th>№</th>-->
+<!--        <th>First name</th>-->
+<!--        <th>Last name</th>-->
+<!--        <th>Age</th>-->
+<!--        <th>Birthday</th>-->
+<!--        <th>Group</th>-->
+<!--        <th>Enroll date</th>-->
+<!--        <th>Graduate date</th>-->
+<!--        <th><i class="bi bi-telephone"></i></th>-->
+<!--        <th><i class="bi bi-pencil-square"></i></th>-->
+<!--        <th><i class="bi bi-trash-fill"></i></th>-->
+<!--    </tr>-->
+
+<!--&lt;!&ndash;Table content&ndash;&gt;-->

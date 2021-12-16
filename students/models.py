@@ -1,5 +1,7 @@
 import datetime
 
+from groups.models import Group
+
 from core.validators import AdultValidator
 
 from dateutil.relativedelta import relativedelta
@@ -23,6 +25,12 @@ class Student(models.Model):
     birthday = models.DateField(
         default=datetime.date.today,
         validators=[AdultValidator(21)]
+    )
+    group = models.ForeignKey(
+        Group,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='students'
     )
     enroll_date = models.DateField(default=datetime.date.today)
     graduate_date = models.DateField(default=datetime.date.today)
