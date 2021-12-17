@@ -7,7 +7,7 @@ from django_filters import FilterSet
 from .models import Teacher
 
 
-class TeachersCreateForm(forms.ModelForm):
+class TeachersForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = [
@@ -15,6 +15,7 @@ class TeachersCreateForm(forms.ModelForm):
             'last_name',
             'age',
             'specialization',
+            'group',
             'work_experience',
             'phone_number',
         ]

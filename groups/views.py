@@ -5,8 +5,8 @@ from django.urls import reverse
 
 from webargs import fields, validate    # noqa
 
-from .forms import GroupsCreateForm
 from .forms import GroupsFilter
+from .forms import GroupsForm
 from .models import Group
 
 
@@ -23,10 +23,10 @@ def get_groups(request):
 
 def create_group(request):
     if request.method == 'GET':
-        form = GroupsCreateForm()
+        form = GroupsForm()
 
     elif request.method == 'POST':
-        form = GroupsCreateForm(data=request.POST)
+        form = GroupsForm(data=request.POST)
 
         if form.is_valid():
             form.save()
@@ -42,10 +42,10 @@ def create_group(request):
 def update_group(request, pk):
     group = Group.objects.get(id=pk)
     if request.method == 'GET':
-        form = GroupsCreateForm(instance=group)
+        form = GroupsForm(instance=group)
 
     elif request.method == 'POST':
-        form = GroupsCreateForm(data=request.POST, instance=group)
+        form = GroupsForm(data=request.POST, instance=group)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('groups:get'))

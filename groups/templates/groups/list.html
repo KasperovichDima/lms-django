@@ -19,7 +19,7 @@
         <th>Course name</th>
         <th>Start date</th>
         <th>Number of students</th>
-        <th>Teacher name</th>
+<!--        <th>Teacher name</th>-->
         <th><i class="bi bi-pencil-square"></i></th>
         <th><i class="bi bi-trash-fill"></i></th>
     </tr>
@@ -31,7 +31,7 @@
         <td>{{group.course_name}}</td>
         <td>{{group.start_date}}</td>
         <td>{{group.number_of_students}}</td>
-        <td>{{group.teacher_name}}</td>
+<!--        <td>{{group.teacher_name}}</td>-->
         <td><a class="btn btn-outline-warning" href="{% url 'groups:update' group.id %}">Edit</a></td>
         <td><a class="btn btn-outline-danger" href="{% url 'groups:delete' group.id %}">Del</a></td>
     </tr>

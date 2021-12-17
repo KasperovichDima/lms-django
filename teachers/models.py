@@ -1,5 +1,7 @@
 from django.db import models
 
+from groups.models import Group
+
 
 class Teacher(models.Model):
 
@@ -13,6 +15,12 @@ class Teacher(models.Model):
         blank=True,
         null=True,
         unique=True
+    )
+    group = models.ForeignKey(
+        Group,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='teachers'
     )
 
     def __str__(self):

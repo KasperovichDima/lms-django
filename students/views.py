@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 
-from .forms import StudentCreateForm
+from .forms import StudentForm
 from .forms import StudentsFilter
 from .models import Student
 
@@ -34,10 +34,10 @@ def get_students(request):
 
 def create_student(request):
     if request.method == 'GET':
-        form = StudentCreateForm()
+        form = StudentForm()
 
     elif request.method == 'POST':
-        form = StudentCreateForm(data=request.POST)
+        form = StudentForm(data=request.POST)
 
         if form.is_valid():
             form.save()
@@ -53,11 +53,11 @@ def create_student(request):
 def update_student(request, pk):
     student = Student.objects.get(id=pk)
     if request.method == 'GET':
-        form = StudentCreateForm(instance=student)
+        form = StudentForm(instance=student)
 
     elif request.method == 'POST':
-        form = StudentCreateForm(data=request.POST,
-                                 instance=student)
+        form = StudentForm(data=request.POST,
+                           instance=student)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('students:get'))
