@@ -12,6 +12,8 @@ class GroupsForm(forms.ModelForm):
             'course_name',
             'start_date',
             'number_of_students',
+            'headman',
+            'teacher'
             # 'teacher_name',
         ]
 

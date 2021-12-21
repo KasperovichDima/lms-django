@@ -22,7 +22,7 @@ def gen_std(request):
 
 def get_students(request):
 
-    res = Student.objects.all()
+    res = Student.objects.all().select_related('group', 'headman_in_group')
     filter_students = StudentsFilter(data=request.GET, queryset=res)
 
     return render(
