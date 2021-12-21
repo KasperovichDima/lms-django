@@ -1,6 +1,10 @@
 asgiref==3.4.1
-Django==3.2.9
-Faker==9.8.3
+crispy-bootstrap5==0.6
+Django==4.0
+django-crispy-forms==1.13.0
+django-debug-toolbar==3.2.3
+django-filter==21.1
+Faker==10.0.0
 flake8==4.0.1
 flake8-builtins==1.5.3
 flake8-import-order==0.18.1
@@ -9,7 +13,6 @@ mccabe==0.6.1
 pycodestyle==2.8.0
 pyflakes==2.4.0
 python-dateutil==2.8.2
-pytz==2021.3
 six==1.16.0
 sqlparse==0.4.2
 text-unidecode==1.3

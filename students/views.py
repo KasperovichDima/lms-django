@@ -3,9 +3,9 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
 
-from webargs.djangoparser import use_args
 
 from .forms import StudentCreateForm
+from .forms import StudentsFilter
 from .models import Student
 
 from webargs import fields, validate    # noqa
@@ -20,25 +20,15 @@ def gen_std(request):
     )
 
 
-@use_args(
-    {
-        'first_name': fields.Str(required=False),
-        'last_name': fields.Str(required=False),
-        'age': fields.Int(required=False)
-    },
-    location='query'
-)
-def get_students(request, args):
-    form = StudentCreateForm()
+def get_students(request):
+
     res = Student.objects.all()
-    if args:
-        for k, v in args.items():
-            res = res.filter(**{k: v})
+    filter_students = StudentsFilter(data=request.GET, queryset=res)
 
     return render(
         request=request,
         template_name='students/list.html',
-        context={'students': res, 'form': form}
+        context={'filter_students': filter_students},
     )
 
 

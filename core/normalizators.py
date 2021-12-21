@@ -30,7 +30,7 @@ def normalize_phone(phone):
         raise ValidationError('Number is too long or incorrect. '
                               'Please, check the number and try again!')
 
-    elif len(phone) < normal_phone_length:
+    if len(phone) < normal_phone_length:
         raise ValidationError('Number is too short or incorrect. '
                               'Please, check the number and try again!')
 

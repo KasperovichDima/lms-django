@@ -2,6 +2,8 @@ from core.normalizators import normalize_phone
 
 from django import forms
 
+from django_filters import FilterSet
+
 from .models import Student
 
 
@@ -37,3 +39,13 @@ class StudentCreateForm(forms.ModelForm):
         phone_number = self.cleaned_data['phone_number']
         phone_number = normalize_phone(phone_number)
         return phone_number
+
+
+class StudentsFilter(FilterSet):
+    class Meta:
+        model = Student
+        fields = {
+            'age': ['lt', 'gt'],
+            'first_name': ['exact', 'icontains'],
+            'last_name': ['exact', 'startswith'],
+        }

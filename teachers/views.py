@@ -4,34 +4,20 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .forms import TeachersCreateForm
+from .forms import TeachersFilter
 from .models import Teacher
 
 from webargs import fields, validate    # noqa
-from webargs.djangoparser import use_args
 
 
-@use_args(
-    {
-        'first_name': fields.Str(required=False),
-        'last_name': fields.Str(required=False),
-        'age': fields.Int(required=False),
-        'specialization': fields.Str(required=False),
-        'work_experience': fields.Int(required=False),
-    },
-    location='query'
-)
-def get_teachers(request, args):
+def get_teachers(request):
     res = Teacher.objects.all()
-    form = TeachersCreateForm()
-
-    for key, value in args.items():
-        if value:
-            res = res.filter(**{key: value})
+    filter_teachers = TeachersFilter(data=request.GET, queryset=res)
 
     return render(
-        request=request,
-        template_name='teachers/list.html',
-        context={'teachers': res, 'form': form}
+        request,
+        'teachers/list.html',
+        {'filter_teachers': filter_teachers}
     )
 
 

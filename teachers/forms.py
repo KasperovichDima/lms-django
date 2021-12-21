@@ -2,6 +2,8 @@ from core.normalizators import normalize_phone
 
 from django import forms
 
+from django_filters import FilterSet
+
 from .models import Teacher
 
 
@@ -25,3 +27,9 @@ class TeachersCreateForm(forms.ModelForm):
         phone_number = self.cleaned_data['phone_number']
         phone_number = normalize_phone(phone_number)
         return phone_number
+
+
+class TeachersFilter(FilterSet):
+    class Meta:
+        model = Teacher
+        exclude = ['age', 'phone_number']

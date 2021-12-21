@@ -4,28 +4,28 @@
     Teachers list
 {% endblock %}
 
-
 {% block content %}
-    <form method="get">
-        {{form.as_p}}
-        <input type="submit" value="Search">
-    </form>
-<p><strong>Count of teachers:{{teachers.count}}</strong></p>
-    <table>
-        <tr>
-            <th>№</th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Age</th>
-            <th>Specialization</th>
-            <th>Work experience</th>
-            <th>Phone number</th>
-            <th>📝</th>
-            <th>❌</th>
-        </tr>
 
+<!--Accordion + search for-->
+{% include "teachers/includes/search_form.html" %}
 
-{%for teacher in teachers%}
+<p><strong>Count of teachers:{{filter_teachers.qs.count}}</strong></p>
+<!--Table headers-->
+<table class="table table-dark table-hover">
+    <tr>
+        <th>№</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Age</th>
+        <th>Specialization</th>
+        <th>Work experience</th>
+        <th><i class="bi bi-telephone"></i></th>
+        <th><i class="bi bi-pencil-square"></i></th>
+        <th><i class="bi bi-trash-fill"></i></th>
+    </tr>
+
+<!--Table content-->
+{%for teacher in filter_teachers.qs%}
     <tr>
         <td>{{forloop.counter}}</td>
         <td>{{teacher.first_name}}</td>
@@ -33,9 +33,11 @@
         <td>{{teacher.age}}</td>
         <td>{{teacher.specialization}}</td>
         <td>{{teacher.work_experience}}</td>
-        <td>{{teacher.phone_number}}</td>
-        <td><a href="{% url 'teachers:update' teacher.id %}">Edit</a></td>
-        <td><a href="{% url 'teachers:delete' teacher.id %}">Del</a></td>
+        <td>{% if teacher.phone_number is not None %}
+                {{teacher.phone_number}}</td>
+            {% endif %}
+        <td><a class="btn btn-outline-warning" href="{% url 'teachers:update' teacher.id %}">Edit</a></td>
+        <td><a class="btn btn-outline-danger" href="{% url 'teachers:delete' teacher.id %}">Del</a></td>
     </tr>
 
 {% endfor %}
