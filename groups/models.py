@@ -14,10 +14,6 @@ class Group(models.Model):
         null=True,
         related_name='headman_in_group'
     )
-    teacher = models.ManyToManyField(
-        to='teachers.Teacher',
-        related_name='groups'
-    )
 
     def __str__(self):
         return f'{self.course_name} - {self.start_date}'

@@ -13,8 +13,6 @@ class GroupsForm(forms.ModelForm):
             'start_date',
             'number_of_students',
             'headman',
-            'teacher'
-            # 'teacher_name',
         ]
 
         widgets = {'start_date': forms.DateInput(attrs={'type': 'date'})}

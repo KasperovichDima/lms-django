@@ -10,11 +10,9 @@ class Teacher(Person):
     salary = models.PositiveIntegerField(default=1500)
     specialization = models.CharField(max_length=100)
     work_experience = models.IntegerField(null=True)
-    group = models.ForeignKey(
-        Group,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name='teachers'
+    group = models.ManyToManyField(
+        to='groups.Group',
+        related_name='teacher'
     )
 
     @classmethod
