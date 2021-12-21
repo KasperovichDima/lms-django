@@ -53,7 +53,7 @@ class Person(models.Model):
         super().save(*args, **kwargs)
 
     @classmethod
-    def _generate(cls, groups):
+    def _generate(cls, group):
         fake = Faker()
         object = cls(
             first_name=fake.first_name(),
@@ -61,8 +61,8 @@ class Person(models.Model):
             birthday=fake.date_between_dates(date(1970, 1, 1), date(2000, 1, 1)),
             phone_number='380' + f'{random.choice([50, 95, 67, 97, 63, 73])}' +
                        f'{random.choice(range(1000000, 9999999))}',
-            group=random.choice(groups)
             )
+
         object.save()
         return object
 
@@ -71,4 +71,5 @@ class Person(models.Model):
     def generate(cls, count):
         groups = Group.objects.all()
         for _ in range(count):
-            cls._generate(groups)
+            group=random.choice(groups)
+            cls._generate(group)

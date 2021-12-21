@@ -15,7 +15,7 @@ class TeachersForm(forms.ModelForm):
             'last_name',
             'age',
             'specialization',
-            'group',
+            # 'group',
             'work_experience',
             'phone_number',
         ]
