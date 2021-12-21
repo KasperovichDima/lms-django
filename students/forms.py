@@ -7,7 +7,7 @@ from django_filters import FilterSet
 from .models import Student
 
 
-class StudentCreateForm(forms.ModelForm):
+class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = [
@@ -48,4 +48,5 @@ class StudentsFilter(FilterSet):
             'age': ['lt', 'gt'],
             'first_name': ['exact', 'icontains'],
             'last_name': ['exact', 'startswith'],
+            'group': ['exact']
         }

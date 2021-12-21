@@ -7,10 +7,17 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{form | crispy}}
-        <input class="btn btn-outline-danger" type="submit" value="Update">
-        <a class="btn btn-outline-warning" href="{% url 'groups:get' %}">Cancel</a>
-    </form>
+
+{%include 'groups/includes/update_form.html'%}
+
+<h3>Teachers:</h3>
+{%with obj_list=group.teachers.all%}
+    {%include 'includes/teachers_list_table.html'%}
+{%endwith%}
+
+<h3>Students:</h3>
+{%with obj_list=group.students.all%}
+    {%include 'includes/students_list_table.html'%}
+{%endwith%}
+
 {% endblock %}

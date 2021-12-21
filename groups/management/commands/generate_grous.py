@@ -22,8 +22,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for _ in range(options['count']):
             fk = Faker()
-            t = gm.Group(course_name=choice(['C/C++', 'JAVA', 'JS', 'Python', 'PHP', 'Rust']),
+            t = gm.Group(course_name=choice(['UX/UI', 'Backend', 'Frontend',
+                                             'Gamedev', 'Enterprise', 'OSdev']),
                          start_date=fk.date_between_dates(date(2021, 1, 10), date(2021, 12, 25)),
                          number_of_students=fk.pyint(5, 25),
-                         teacher_name=fk.name())
+                         )
             t.save()
