@@ -1,8 +1,8 @@
-from django.db import models
 import random
-from core.models import Person
-from groups.models import Group
 
+from core.models import Person
+
+from django.db import models
 
 
 class Teacher(Person):
@@ -17,7 +17,7 @@ class Teacher(Person):
 
     @classmethod
     def _generate(cls, group):
-        teacher = super()._generate(group)
+        teacher = super()._generate()
         teacher.salary = random.randint(1500, 3500)
         teacher.specialization = random.choice(['Python', 'Java', 'JS', 'C/C++', 'cobol', 'basic'])
         teacher.work_experience = random.randrange(5, 15)

@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
 
+import teachers.forms as forms
+
 from .forms import TeachersFilter
-from .forms import TeachersForm
 from .models import Teacher
 
 from webargs import fields, validate    # noqa
@@ -23,10 +24,10 @@ def get_teachers(request):
 
 def create_teacher(request):
     if request.method == 'GET':
-        form = TeachersForm()
+        form = forms.TeachersCreateForm()
 
     elif request.method == 'POST':
-        form = TeachersForm(data=request.POST)
+        form = forms.TeachersCreateForm(data=request.POST)
 
         if form.is_valid():
             form.save()
@@ -42,10 +43,10 @@ def create_teacher(request):
 def update_teacher(request, pk):
     teacher = Teacher.objects.get(id=pk)
     if request.method == 'GET':
-        form = TeachersForm(instance=teacher)
+        form = forms.TeachersUpdateForm(instance=teacher)
 
     elif request.method == 'POST':
-        form = TeachersForm(data=request.POST, instance=teacher)
+        form = forms.TeachersUpdateForm(data=request.POST, instance=teacher)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('teachers:get'))

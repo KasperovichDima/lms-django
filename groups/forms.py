@@ -5,15 +5,21 @@ from django_filters import FilterSet
 from .models import Group
 
 
-class GroupsForm(forms.ModelForm):
+class GroupsCreateForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = [
             'course_name',
             'start_date',
-            'number_of_students',
-            'headman',
+            'teachers',
         ]
+        widgets = {'start_date': forms.DateInput(attrs={'type': 'date'})}
+
+
+class GroupsUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = '__all__'
 
         widgets = {'start_date': forms.DateInput(attrs={'type': 'date'})}
 
@@ -22,8 +28,9 @@ class GroupsFilter(FilterSet):
     class Meta:
         model = Group
         fields = {
-            'course_name': ['exact', 'icontains'],
-            'start_date': ['year__gt'],
-            'number_of_students': ['lt', 'gt'],
-            # 'teacher_name': ['exact', 'icontains'],
+            'course_name': ['exact', ],
+            'start_date': ['month__lt', 'month__gt'],
+            'headman': ['exact', ],
+            'teachers': ['exact', ]
         }
+        widgets = {'start_date': forms.DateInput(attrs={'type': 'date'})}

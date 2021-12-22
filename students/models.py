@@ -1,34 +1,36 @@
-import random
 from datetime import date
 from datetime import timedelta
 
+from core.models import Person
+
 from django.db import models
 
-from faker import Faker
-
-from core.models import Person
 from groups.models import Group
 
 
 class Student(Person):
     enroll_date = models.DateField(default=date.today)
-    graduate_date = models.DateField(default=date.today)
+    graduate_date = models.DateField(null=True)
     group = models.ForeignKey(
         Group,
-        on_delete=models.SET_NULL,
         null=True,
+        on_delete=models.CASCADE,
         related_name='students'
     )
 
+    def save(self, *args, **kwargs):
+        self.enroll_date = self.group.start_date
+        self.graduate_date = self.enroll_date + timedelta(days=120)
+        super().save(*args, **kwargs)
+
     @classmethod
-    def _generate(cls, *args, **kwargs):
-        fake = Faker()
-        student = super()._generate(*args, **kwargs)
-        student.enroll_date = fake.date_between_dates(date(2021, 10, 1), date.today())
+    def _generate(cls, group):
+        student = super()._generate()
+        student.enroll_date = group.start_date
         student.graduate_date = student.enroll_date + timedelta(days=120)
+        student.group = group
+
         student.save()
-
-
 
     # @staticmethod
     # def generate_students(request):
