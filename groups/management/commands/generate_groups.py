@@ -20,11 +20,11 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        fk = Faker()
         for _ in range(options['count']):
-            fk = Faker()
-            t = gm.Group(course_name=choice(['UX/UI', 'Backend', 'Frontend',
-                                             'Gamedev', 'Enterprise', 'OSdev']),
-                         start_date=fk.date_between_dates(date(2021, 1, 10), date(2021, 12, 25)),
-                         number_of_students=fk.pyint(5, 25),
-                         )
-            t.save()
+            letter = choice(['A', 'B', 'C', 'D'])
+            number = choice(['1', '2', '3', '4'])
+            gr = gm.Group(group_name=(letter + number),
+                          start_date=fk.date_between_dates(date(2021, 1, 10), date(2021, 12, 25)),
+                          )
+            gr.save()

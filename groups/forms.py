@@ -9,7 +9,7 @@ class GroupsCreateForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = [
-            'course_name',
+            'group_name',
             'start_date',
             'teachers',
         ]
@@ -20,7 +20,6 @@ class GroupsUpdateForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = '__all__'
-
         widgets = {'start_date': forms.DateInput(attrs={'type': 'date'})}
 
 
@@ -28,7 +27,8 @@ class GroupsFilter(FilterSet):
     class Meta:
         model = Group
         fields = {
-            'course_name': ['exact', ],
+            'group_name': ['exact', ],
+            'course': ['exact', ],
             'start_date': ['month__lt', 'month__gt'],
             'headman': ['exact', ],
             'teachers': ['exact', ]

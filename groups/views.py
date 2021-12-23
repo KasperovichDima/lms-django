@@ -10,8 +10,8 @@ from .models import Group
 
 
 def get_groups(request):
-    res = Group.objects.all().prefetch_related('students')
-    filter_groups = GroupsFilter(data=request.GET, queryset=res)
+    groups = Group.objects.all().prefetch_related('students', 'course')
+    filter_groups = GroupsFilter(data=request.GET, queryset=groups)
 
     return render(
         request,

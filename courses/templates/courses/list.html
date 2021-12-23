@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Courses list
+{% endblock %}
+
+
+{% block content %}
+
+<!--Accordion + search for-->
+{% include "courses/includes/search_form.html" %}
+
+<p><strong>Count of courses:{{filter_courses.qs.count}}</strong></p>
+
+<!--Table headers-->
+<table class="table table-dark table-hover">
+    <tr>
+        <th>№</th>
+        <th>Cours name</th>
+        <th>Start date</th>
+        <th>Group</th>
+        <th><i class="bi bi-pencil-square"></i></th>
+        <th><i class="bi bi-trash-fill"></i></th>
+    </tr>
+
+<!--Table content-->
+{%for course in filter_courses.qs%}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{course.course_name}}</td>
+        <td>{{course.start_date}}</td>
+        <td>{{course.group}}</td>
+        <td><a class="btn btn-outline-warning" href="{% url 'courses:update' course.id %}">Edit</a></td>
+        <td><a class="btn btn-outline-danger" href="{% url 'courses:delete' course.id %}">Del</a></td>
+    </tr>
+
+{% endfor %}
+{% endblock %}
+    </table>

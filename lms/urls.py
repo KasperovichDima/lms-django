@@ -32,4 +32,6 @@ urlpatterns = [
     path('groups/', include('groups.urls')),
     # Teachers
     path('teachers/', include('teachers.urls')),
+    # Courses
+    path('courses/', include('courses.urls')),
 ]

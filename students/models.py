@@ -19,8 +19,9 @@ class Student(Person):
     )
 
     def save(self, *args, **kwargs):
-        self.enroll_date = self.group.start_date
-        self.graduate_date = self.enroll_date + timedelta(days=120)
+        if self.group:
+            self.enroll_date = self.group.start_date
+            self.graduate_date = self.enroll_date + timedelta(days=120)
         super().save(*args, **kwargs)
 
     @classmethod
