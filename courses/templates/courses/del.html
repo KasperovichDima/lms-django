@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Group delete
+    Course delete
 {% endblock %}
 
 {% block content %}
     <form method="post">
         {% csrf_token %}
         <br><br>
-        Are you sure, you want to delete group
-            {{group.group_name}}, which starts on {{group.start_date}}?
+        Are you sure, you want to delete course
+            {{course.course_name}}, which starts on {{course.start_date}}?
             <br><b>This operation is irreversible!</b>
         <br><br>
         <input class="btn btn-outline-danger" type="submit" value="Delete">
-        <a class="btn btn-outline-warning" href="{% url 'groups:get' %}">Cancel</a>
+        <a class="btn btn-outline-warning" href="{% url 'courses:get' %}">Cancel</a>
     </form>
 {% endblock %}

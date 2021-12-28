@@ -10,13 +10,7 @@ from .models import Student
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = [
-            'first_name',
-            'last_name',
-            'birthday',
-            'phone_number',
-        ]
-
+        exclude = ('age', 'enroll_date', 'graduate_date')
         widgets = {'birthday': forms.DateInput(attrs={'type': 'date'})}
 
     @staticmethod
@@ -39,6 +33,20 @@ class StudentForm(forms.ModelForm):
         phone_number = self.cleaned_data['phone_number']
         phone_number = normalize_phone(phone_number)
         return phone_number
+
+
+class StudentCreateForm(StudentForm):
+    pass
+
+
+class StudentUpdateForm(StudentForm):
+    class Meta:
+        model = Student
+        exclude = ('age',)
+        widgets = {'birthday': forms.DateInput(attrs={'type': 'date'}),
+                   'enroll_date': forms.DateInput(attrs={'type': 'date'}),
+                   'graduate_date': forms.DateInput(attrs={'type': 'date'})
+                   }
 
 
 class StudentsFilter(FilterSet):

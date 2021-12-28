@@ -16,10 +16,10 @@
 <table class="table table-dark table-hover">
     <tr>
         <th>№</th>
-        <th>Course name</th>
+        <th>Group name</th>
+        <th>Course</th>
         <th>Start date</th>
         <th>Number of students</th>
-<!--        <th>Teacher name</th>-->
         <th><i class="bi bi-pencil-square"></i></th>
         <th><i class="bi bi-trash-fill"></i></th>
     </tr>
@@ -28,10 +28,10 @@
 {%for group in filter_groups.qs%}
     <tr>
         <td>{{forloop.counter}}</td>
-        <td>{{group.course_name}}</td>
+        <td>{{group.group_name}}</td>
+        <td>{{group.course}}</td>
         <td>{{group.start_date}}</td>
-        <td>{{group.number_of_students}}</td>
-<!--        <td>{{group.teacher_name}}</td>-->
+        <td>{{group.students.count}}</td>
         <td><a class="btn btn-outline-warning" href="{% url 'groups:update' group.id %}">Edit</a></td>
         <td><a class="btn btn-outline-danger" href="{% url 'groups:delete' group.id %}">Del</a></td>
     </tr>
@@ -45,7 +45,7 @@
 <!--Форма, написанная вручную-->
 <!--    <form method="get">-->
 <!--        <label for="cname">Course:</label>-->
-<!--        <input type="text" id="cname" name="course_name"></br></br>-->
+<!--        <input type="text" id="cname" name="group_name"></br></br>-->
 
 <!--        <label for="sdate">Start Date:</label>-->
 <!--        <input type="date" id="sdate" name="start_date"></br></br>-->

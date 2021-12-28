@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django_filters',
     'debug_toolbar',
     'students.apps.StudentsConfig',
+    'core.apps.CoreConfig',
+    'courses.apps.CoursesConfig',
 ]
 
 MIDDLEWARE = [

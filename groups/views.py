@@ -3,30 +3,28 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
 
-from webargs import fields, validate    # noqa
+import groups.forms as forms
 
 from .forms import GroupsFilter
-from .forms import GroupsForm
 from .models import Group
 
 
 def get_groups(request):
-    res = Group.objects.all()
-    filter_groups = GroupsFilter(data=request.GET, queryset=res)
+    groups = Group.objects.all().prefetch_related('students', 'course')
+    filter_groups = GroupsFilter(data=request.GET, queryset=groups)
 
     return render(
         request,
         'groups/list.html',
-        {'filter_groups': filter_groups}
-    )
+        {'filter_groups': filter_groups})
 
 
 def create_group(request):
     if request.method == 'GET':
-        form = GroupsForm()
+        form = forms.GroupsCreateForm()
 
     elif request.method == 'POST':
-        form = GroupsForm(data=request.POST)
+        form = forms.GroupsCreateForm(data=request.POST)
 
         if form.is_valid():
             form.save()
@@ -42,10 +40,10 @@ def create_group(request):
 def update_group(request, pk):
     group = Group.objects.get(id=pk)
     if request.method == 'GET':
-        form = GroupsForm(instance=group)
+        form = forms.GroupsUpdateForm(instance=group)
 
     elif request.method == 'POST':
-        form = GroupsForm(data=request.POST, instance=group)
+        form = forms.GroupsUpdateForm(data=request.POST, instance=group)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('groups:get'))
@@ -53,7 +51,10 @@ def update_group(request, pk):
     return render(
         request=request,
         template_name='groups/update.html',
-        context={'form': form, 'group': group}
+        context={'form': form,
+                 'group': group,
+                 'students': group.students.prefetch_related('headman_in_group'),
+                 }
     )
 
 

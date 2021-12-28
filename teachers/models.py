@@ -1,28 +1,26 @@
+import random
+
+from core.models import Person
+
 from django.db import models
 
-from groups.models import Group
 
+class Teacher(Person):
 
-class Teacher(models.Model):
-
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    age = models.IntegerField()
+    salary = models.PositiveIntegerField(default=1500)
     specialization = models.CharField(max_length=100)
-    work_experience = models.IntegerField()
-    phone_number = models.CharField(
-        max_length=20,
-        blank=True,
-        null=True,
-        unique=True
-    )
-    group = models.ForeignKey(
-        Group,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name='teachers'
-    )
+    work_experience = models.IntegerField(null=True)
+    # group = models.ManyToManyField(
+    #     to='groups.Group',
+    #     related_name='teacher'
+    # )
 
-    def __str__(self):
-        return f'{self.first_name}, {self.last_name}, {self.age}, ' \
-               f'{self.specialization}, {self.work_experience}, {self.phone_number}'
+    @classmethod
+    def _generate(cls, group):
+        teacher = super()._generate()
+        teacher.salary = random.randint(1500, 3500)
+        teacher.specialization = random.choice(['Python', 'Java', 'JS', 'C/C++', 'cobol', 'basic'])
+        teacher.work_experience = random.randrange(5, 15)
+        teacher.groups.add(group)
+
+        teacher.save()
