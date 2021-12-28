@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Groups list
+Groups list
 {% endblock %}
 
 
@@ -24,8 +24,8 @@
         <th><i class="bi bi-trash-fill"></i></th>
     </tr>
 
-<!--Table content-->
-{%for group in object_list.qs%}
+    <!--Table content-->
+    {%for group in object_list.qs%}
     <tr>
         <td>{{forloop.counter}}</td>
         <td>{{group.group_name}}</td>
@@ -36,10 +36,9 @@
         <td><a class="btn btn-outline-danger" href="{% url 'groups:delete' group.id %}">Del</a></td>
     </tr>
 
-{% endfor %}
-{% endblock %}
-    </table>
-
+    {% endfor %}
+    {% endblock %}
+</table>
 
 
 <!--Форма, написанная вручную-->
