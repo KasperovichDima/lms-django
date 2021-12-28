@@ -12,7 +12,7 @@
 <p><strong>Count of teachers:{{filter_teachers.qs.count}}</strong></p>
 <!--Table headers-->
 
-{%with obj_list=filter_teachers.qs%}
+{%with obj_list=object_list.qs%}
    {%include 'includes/teachers_list_table.html'%}
 {%endwith%}
 

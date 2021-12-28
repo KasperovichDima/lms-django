@@ -9,10 +9,10 @@
 
 <!--Accordion + search for-->
 {% include "students/includes/search_form.html" %}
-<p class = "mt-2"><strong>Count of students:{{filter_students.qs.count}}</strong>&nbsp;&nbsp;</p>
+<p class = "mt-2"><strong>Count of students:{{object_list.qs.count}}</strong>&nbsp;&nbsp;</p>
 
 <!--Table (students_list)-->
-{%with obj_list=filter_students.qs%}
+{%with obj_list=object_list.qs%}
     {%include 'includes/students_list_table.html'%}
 {%endwith%}
 
