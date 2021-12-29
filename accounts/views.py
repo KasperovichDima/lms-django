@@ -1,12 +1,11 @@
+from accounts.forms import AccountRegistrationForm
+
+import django.views.generic as CBV
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
-import django.views.generic as CBV
-
-# Create your views here.
-from django.urls import reverse_lazy, reverse
-
-from accounts.forms import AccountRegistrationForm
+from django.urls import reverse
+from django.urls import reverse_lazy
 
 
 class AccountRegistrationView(CBV.CreateView):
