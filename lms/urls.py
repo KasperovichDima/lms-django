@@ -34,4 +34,8 @@ urlpatterns = [
     path('teachers/', include('teachers.urls')),
     # Courses
     path('courses/', include('courses.urls')),
+    # Accounts
+    path('accounts/', include('accounts.urls')),
+    # Password reset
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

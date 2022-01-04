@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'students.apps.StudentsConfig',
     'core.apps.CoreConfig',
     'courses.apps.CoursesConfig',
+    'accounts.apps.AccountsConfig'
 ]
 
 MIDDLEWARE = [
@@ -88,6 +89,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        # 'NAME': ':memory:',
     }
 }
 
@@ -144,3 +146,5 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 DATE_FORMAT = 'd-m-Y'
+
+EMAIL_PORT = 1025

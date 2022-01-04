@@ -31,7 +31,10 @@ class GroupUpdateView(CBV.UpdateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        form.instance.headman = Student.objects.get(id=form.cleaned_data['hdmn'])
+        try:
+            form.instance.headman = Student.objects.get(id=form.cleaned_data['hdmn'])
+        except ValueError:
+            pass
         form.instance.save()
         return response
 
