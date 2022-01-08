@@ -1,4 +1,5 @@
 import django.views.generic as CBV
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
@@ -16,7 +17,7 @@ def gen_std(request):
     )
 
 
-class StudentUpdateView(CBV.UpdateView):
+class StudentUpdateView(LoginRequiredMixin, CBV.UpdateView):
     model = Student
     form_class = forms.StudentUpdateForm
     success_url = reverse_lazy('students:get')

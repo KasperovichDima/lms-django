@@ -10,8 +10,10 @@
         <th>Group</th>
         <th>Headman</th>
         <th><i class="bi bi-telephone"></i></th>
-        <th><i class="bi bi-pencil-square"></i></th>
-        <th><i class="bi bi-trash-fill"></i></th>
+        {% if user.is_authenticated %}
+            <th><i class="bi bi-pencil-square"></i></th>
+            <th><i class="bi bi-trash-fill"></i></th>
+        {% endif %}
     </tr>
 
     {%for student in obj_list%}
@@ -28,8 +30,10 @@
         <td>{% if student.phone_number is not None %}
                 {{student.phone_number}}</td>
             {% endif %}
-        <td><a class="btn btn-outline-warning" href="{% url 'students:update' student.id %}">Edit</a></td>
-        <td><a class="btn btn-outline-danger" href="{% url 'students:delete' student.id %}">Del</a></td>
+        {% if user.is_authenticated %}
+            <td><a class="btn btn-outline-warning" href="{% url 'students:update' student.id %}">Edit</a></td>
+            <td><a class="btn btn-outline-danger" href="{% url 'students:delete' student.id %}">Del</a></td>
+        {% endif %}
     </tr>
 {% endfor %}
 </table>
