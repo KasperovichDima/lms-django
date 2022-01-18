@@ -22,6 +22,7 @@ class StudentsInlineTable(admin.TabularInline):
 
 class TeachersInlineTable(admin.TabularInline):
     model = Group.teachers.through
+    extra = 0
     # fields = [
     #     'first_name',
     #     'last_name',

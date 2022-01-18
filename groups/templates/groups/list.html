@@ -20,8 +20,10 @@ Groups list
         <th>Course</th>
         <th>Start date</th>
         <th>Number of students</th>
+        {% if user.is_authenticated %}
         <th><i class="bi bi-pencil-square"></i></th>
         <th><i class="bi bi-trash-fill"></i></th>
+        {% endif %}
     </tr>
 
     <!--Table content-->
@@ -32,8 +34,10 @@ Groups list
         <td>{{group.course}}</td>
         <td>{{group.start_date}}</td>
         <td>{{group.students.count}}</td>
+        {% if user.is_authenticated %}
         <td><a class="btn btn-outline-warning" href="{% url 'groups:update' group.id %}">Edit</a></td>
         <td><a class="btn btn-outline-danger" href="{% url 'groups:delete' group.id %}">Del</a></td>
+        {% endif %}
     </tr>
 
     {% endfor %}

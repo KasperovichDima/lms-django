@@ -7,12 +7,14 @@
         <th>Specialization</th>
         <th>Work experience</th>
         <th><i class="bi bi-telephone"></i></th>
+        {% if user.is_authenticated %}
         <th><i class="bi bi-pencil-square"></i></th>
         <th><i class="bi bi-trash-fill"></i></th>
+        {% endif %}
     </tr>
 
 <!--Table content-->
-{%for teacher in obj_list%}
+    {%for teacher in obj_list%}
     <tr>
         <td>{{forloop.counter}}</td>
         <td>{{teacher.first_name}}</td>
@@ -21,10 +23,13 @@
         <td>{{teacher.specialization}}</td>
         <td>{{teacher.work_experience}}</td>
         <td>{% if teacher.phone_number is not None %}
-                {{teacher.phone_number}}</td>
-            {% endif %}
+            {{teacher.phone_number}}
+        </td>
+        {% endif %}
+        {% if user.is_authenticated %}
         <td><a class="btn btn-outline-warning" href="{% url 'teachers:update' teacher.id %}">Edit</a></td>
         <td><a class="btn btn-outline-danger" href="{% url 'teachers:delete' teacher.id %}">Del</a></td>
+        {% endif %}
     </tr>
-{% endfor %}
-    </table>
+    {% endfor %}
+</table>

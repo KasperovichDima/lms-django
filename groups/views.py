@@ -1,4 +1,5 @@
 import django.views.generic as CBV
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 import groups.forms as forms
@@ -9,7 +10,7 @@ from .forms import GroupsFilter
 from .models import Group
 
 
-class GroupUpdateView(CBV.UpdateView):
+class GroupUpdateView(LoginRequiredMixin, CBV.UpdateView):
     model = Group
     form_class = forms.GroupUpdateForm
     success_url = reverse_lazy('groups:get')
@@ -51,14 +52,14 @@ class GroupListView(CBV.ListView):
         return filter_groups
 
 
-class GroupCreateView(CBV.CreateView):
+class GroupCreateView(LoginRequiredMixin, CBV.CreateView):
     model = Group
     form_class = forms.GroupCreateForm
     success_url = reverse_lazy('groups:get')
     template_name = 'groups/create.html'
 
 
-class GroupDeleteView(CBV.DeleteView):
+class GroupDeleteView(LoginRequiredMixin, CBV.DeleteView):
     model = Group
     success_url = reverse_lazy('groups:get')
 

@@ -1,4 +1,5 @@
 import django.views.generic as CBV
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 import teachers.forms as forms
@@ -7,19 +8,19 @@ from .forms import TeachersFilter
 from .models import Teacher
 
 
-class TeacherUpdateView(CBV.UpdateView):
+class TeacherUpdateView(LoginRequiredMixin, CBV.UpdateView):
     model = Teacher
     form_class = forms.TeachersUpdateForm
     success_url = reverse_lazy('teachers:get')
     template_name = 'teachers/update.html'
 
 
-class TeacherDeleteView(CBV.DeleteView):
+class TeacherDeleteView(LoginRequiredMixin, CBV.DeleteView):
     model = Teacher
     success_url = reverse_lazy('teachers:get')
 
 
-class TeacherCreateView(CBV.CreateView):
+class TeacherCreateView(LoginRequiredMixin, CBV.CreateView):
     model = Teacher
     form_class = forms.TeachersCreateForm
     success_url = reverse_lazy('teachers:get')
