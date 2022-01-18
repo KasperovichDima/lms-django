@@ -7,12 +7,12 @@
 
 {% block content %}
 
-<!--Accordion + search for-->
+<!--Accordion + search form-->
 {% include "students/includes/search_form.html" %}
-<p class = "mt-2"><strong>Count of students:{{object_list.qs.count}}</strong>&nbsp;&nbsp;</p>
+<p class = "mt-2"><strong>Count of students:{{object_list.count}}</strong>&nbsp;&nbsp;</p>
 
 <!--Table (students_list)-->
-{%with obj_list=object_list.qs%}
+{%with obj_list=object_list%}
     {%include 'includes/students_list_table.html'%}
 {%endwith%}
 

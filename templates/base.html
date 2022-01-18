@@ -17,9 +17,15 @@
 <body>
 {% include "includes/navbar.html" %}
 
-<div class = "container mt-4 pt-5" >
+<div class="container mt-4 pt-5">
+    {% include 'includes/messages.html' %}
+
     {% block content %}
     {% endblock %}
+
+    {% if is_paginated %}
+    {% include 'includes/paginator.html' %}
+    {% endif %}
 </div>
 
 

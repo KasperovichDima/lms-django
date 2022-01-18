@@ -37,15 +37,24 @@ class StudentDeleteView(CBV.DeleteView):
 
 
 class StudentListView(CBV.ListView):
+
     model = Student
     template_name = 'students/list.html'
+    paginate_by = 10
 
-    def get_queryset(self):
-        filter_students = StudentsFilter(
+    def get_filter(self):
+        return StudentsFilter(
             data=self.request.GET,
             queryset=self.model.objects.all().select_related('group', 'headman_in_group')
         )
-        return filter_students
+
+    def get_queryset(self):
+        return self.get_filter().qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_form'] = self.get_filter().form
+        return context
 
 # def create_student(request):
 #     if request.method == 'GET':

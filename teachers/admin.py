@@ -1,6 +1,6 @@
-from teachers.models import Teacher
-
 from django.contrib import admin
+
+from teachers.models import Teacher
 
 
 class TeacherAdmin(admin.ModelAdmin):
