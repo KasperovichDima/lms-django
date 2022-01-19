@@ -24,14 +24,14 @@ class StudentUpdateView(LoginRequiredMixin, CBV.UpdateView):
     template_name = 'students/update.html'
 
 
-class StudentCreateView(CBV.CreateView):
+class StudentCreateView(LoginRequiredMixin, CBV.CreateView):
     model = Student
     form_class = forms.StudentCreateForm
     success_url = reverse_lazy('students:get')
     template_name = 'students/create.html'
 
 
-class StudentDeleteView(CBV.DeleteView):
+class StudentDeleteView(LoginRequiredMixin, CBV.DeleteView):
     model = Student
     success_url = reverse_lazy('students:get')
 
