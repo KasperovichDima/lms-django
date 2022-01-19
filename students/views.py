@@ -1,4 +1,5 @@
 import django.views.generic as CBV
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -23,6 +24,11 @@ class StudentUpdateView(LoginRequiredMixin, CBV.UpdateView):
     success_url = reverse_lazy('students:get')
     template_name = 'students/update.html'
 
+    def form_valid(self, form):
+        res = super().form_valid(form)
+        messages.warning(self.request, f'Information about student {self.object} was updated')
+        return res
+
 
 class StudentCreateView(CBV.CreateView):
     model = Student
@@ -30,10 +36,20 @@ class StudentCreateView(CBV.CreateView):
     success_url = reverse_lazy('students:get')
     template_name = 'students/create.html'
 
+    def form_valid(self, form):
+        res = super().form_valid(form)
+        messages.success(self.request, f'Student {self.object} was created')
+        return res
+
 
 class StudentDeleteView(CBV.DeleteView):
     model = Student
     success_url = reverse_lazy('students:get')
+
+    def form_valid(self, form):
+        res = super().form_valid(form)
+        messages.error(self.request, f'Student {self.object} was deleted')
+        return res
 
 
 class StudentListView(CBV.ListView):
