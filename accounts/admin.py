@@ -32,11 +32,14 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': (('username', 'email'), 'password')}),
         ('Personal info', {'fields': (('first_name', 'last_name'),)}),
-        ('Permissions', {
-         'fields': (('is_active', 'is_staff', 'is_superuser'), 'groups', 'user_permissions'),
-        }),
-        ('Important dates', {'fields': (('last_login', 'date_joined'),)}),
-    )
+        ('Permissions', {'fields': (
+            ('is_active',
+             'is_staff',
+             'is_superuser'),
+            'groups',
+            'user_permissions'
+        )}),
+        ('Important dates', {'fields': (('last_login', 'date_joined'),)}),)
 
     readonly_fields = ['last_login', 'date_joined']
 
@@ -47,7 +50,4 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.unregister(User)
-admin.site.register(
-    User,
-    CustomUserAdmin
-)
+admin.site.register(User, CustomUserAdmin)
