@@ -61,7 +61,11 @@ class AccountUpdateView(CBV.edit.ProcessFormView):
         user = self.request.user
         profile = user.profile
         account_form = forms.AccountUpdateForm(instance=user, data=request.POST)
-        profile_form = forms.AccountProfileUpdateForm(instance=profile, data=request.POST)
+        profile_form = forms.AccountProfileUpdateForm(
+            instance=profile,
+            data=request.POST,
+            files=request.FILES
+        )
 
         if account_form.is_valid() and profile_form.is_valid():
             account_form.save()
