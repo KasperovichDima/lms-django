@@ -28,5 +28,5 @@ class AccountUpdateForm(forms.UserChangeForm):
 class AccountProfileUpdateForm(d_forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['birthday', 'city']
+        fields = ['birthday', 'city', 'avatar']
         widgets = {'birthday': d_forms.DateInput(attrs={'type': 'date'})}

@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     'groups.apps.GroupsConfig',
     'teachers.apps.TeachersConfig',
     'crispy_forms',
@@ -47,7 +49,8 @@ INSTALLED_APPS = [
     'students.apps.StudentsConfig',
     'core.apps.CoreConfig',
     'courses.apps.CoursesConfig',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'core.middlewares.OperationTimeMiddleware',
 ]
 
 ROOT_URLCONF = 'lms.urls'
@@ -74,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.get_params',
             ],
         },
     },
@@ -131,7 +137,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -148,3 +157,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 DATE_FORMAT = 'd-m-Y'
 
 EMAIL_PORT = 1025
+
+SITE_ID = 1
+
+CKEDITOR_UPLOAD_PATH = "uploads/"

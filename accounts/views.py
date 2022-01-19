@@ -1,6 +1,7 @@
 from accounts import forms
 
 import django.views.generic as CBV
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
@@ -27,6 +28,14 @@ class AccountLoginView(LoginView):
 
         return reverse('index')
 
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        messages.success(self.request, f'User {self.request.user} has successfully logged in.')
+        # messages.info(self.request, f'User {self.request.user} has successfully logged in.')
+        # messages.warning(self.request, f'User {self.request.user} has successfully logged in.')
+        # messages.error(self.request, f'User {self.request.user} has successfully logged in.')
+        return result
+
 
 class AccountLogoutView(LogoutView):
     template_name = 'accounts/logout.html'
@@ -52,7 +61,11 @@ class AccountUpdateView(CBV.edit.ProcessFormView):
         user = self.request.user
         profile = user.profile
         account_form = forms.AccountUpdateForm(instance=user, data=request.POST)
-        profile_form = forms.AccountProfileUpdateForm(instance=profile, data=request.POST)
+        profile_form = forms.AccountProfileUpdateForm(
+            instance=profile,
+            data=request.POST,
+            files=request.FILES
+        )
 
         if account_form.is_valid() and profile_form.is_valid():
             account_form.save()
