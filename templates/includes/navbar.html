@@ -7,9 +7,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/about/">About Us</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,6 +55,12 @@
                         <li><a class="dropdown-item" href="{% url 'courses:create' %}">Create</a></li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/about/">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/contacts/">Contacts</a>
+                </li>
             </ul>
             <div class="d-flex">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -86,6 +89,9 @@
                         </ul>
                     </li>
                 </ul>
+            </div>
+            <div class="img-circle.vert">
+                <img class="rounded-circle p-1 m-1" width="50" height="50" src="{{ user.profile.avatar.url }}">
             </div>
 
         </div>
